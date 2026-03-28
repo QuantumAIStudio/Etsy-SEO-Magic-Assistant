@@ -1,8 +1,24 @@
-export const onRequestPost: PagesFunction = async (context) => {
+export async function onRequest(context: any) {
   const { request } = context;
   
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method Not Allowed. Please use POST.' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
   // Clone the request to read the body
-  const body: any = await request.json();
+  let body: any;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  
   const prompt = body.prompt || body.text || body.message;
 
   const WORKER_URLS = [
@@ -16,7 +32,10 @@ export const onRequestPost: PagesFunction = async (context) => {
     try {
       const body = { 
         messages: [
-          { role: 'system', content: 'You are an expert Etsy SEO Consultant. Provide high-quality, professional Etsy listings.' },
+          { 
+            role: 'system', 
+            content: 'You are an expert Etsy SEO Consultant. You MUST provide exactly 13 SEO tags in your response. This is a non-negotiable requirement for Etsy shop optimisation. Use Australian English spelling (e.g., "optimise", "optimisation").' 
+          },
           { role: 'user', content: prompt }
         ] 
       };

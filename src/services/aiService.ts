@@ -22,10 +22,12 @@ export async function generateSEOData(data: SEORequest): Promise<string> {
     (Compelling, formatted Product Description that highlights benefits and features)
 
     # 13 SEO TAGS
-    (Provide EXACTLY 13 unique tags, comma separated. This is critical for Etsy SEO. Do not provide fewer than 13.)
+    (Provide EXACTLY 13 unique tags, comma separated. This is critical for Etsy SEO. Do not provide fewer than 13. Ensure they are relevant, high-volume keywords.)
 
     # AI IMAGE PROMPTS
     (Provide 3 detailed prompts for generating product photos in an AI image generator)
+
+    CRITICAL INSTRUCTION: You MUST provide EXACTLY 13 tags in the "# 13 SEO TAGS" section. This is a mandatory requirement for the user's Etsy shop optimisation.
 
     Ensure the tone is professional yet inviting. ${data.storeName ? `Include the store name "${data.storeName}" naturally where appropriate.` : 'Do not mention a specific store name.'}
   `;

@@ -37,7 +37,7 @@ const THEMES = [
 const LegalModal = ({ isOpen, onClose, title, content }: { isOpen: boolean, onClose: () => void, title: string, content: React.ReactNode }) => (
   <AnimatePresence>
     {isOpen && (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      <div key="modal-overlay" className="fixed inset-0 z-[100] flex items-center justify-center p-6">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -259,6 +259,7 @@ export default function App() {
             <AnimatePresence mode="wait">
               {!result && !loading && (
                 <motion.div 
+                  key="initial-state"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -283,6 +284,7 @@ export default function App() {
 
               {loading && (
                 <motion.div 
+                  key="loading-state"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--theme-bg)]/80 backdrop-blur-md z-20 rounded-[2.5rem]"
@@ -302,6 +304,7 @@ export default function App() {
 
               {error && (
                 <motion.div 
+                  key="error-state"
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="bg-red-500/10 border border-red-500/20 p-8 rounded-3xl text-red-500 space-y-4"
@@ -327,6 +330,7 @@ export default function App() {
 
               {result && (
                 <motion.div 
+                  key="result-state"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="space-y-8"
